@@ -5,19 +5,6 @@ struct Node {
   int data;
   struct Node *next;
 };
-void linkedListTraversal(struct Node *ptr) {
-
-  if (ptr->next == NULL) {
-    printf("Linked List is Empty\n");
-    return;
-  }
-
-  while (ptr != NULL) {
-    printf("Element: %d\n", ptr->data);
-    ptr = ptr->next;
-  }
-}
-
 int length(struct Node *ptr) {
   int count = 0;
 
@@ -27,6 +14,18 @@ int length(struct Node *ptr) {
   }
 
   return count;
+}
+void linkedListTraversal(struct Node *ptr) {
+
+  if (length(ptr) == 0) {
+    printf("Linked List is Empty!!!\n");
+    return;
+  }
+
+  while (ptr != NULL) {
+    printf("Element: %d\n", ptr->data);
+    ptr = ptr->next;
+  }
 }
 
 struct Node *insertAtbeginning(struct Node *head, int data) {
@@ -92,43 +91,45 @@ struct Node *deleteAtIndex(struct Node *head, int index) {
     return head;
   }
 
-    int count = 0;
-    struct Node * p = head;
-    while(p != NULL){
-        if(count == index - 1){
-            p->next = p->next->next;
-            break;
-        }
-        p = p->next;
-        count += 1;
+  int count = 0;
+  struct Node *p = head;
+  while (p != NULL) {
+    if (count == index - 1) {
+      p->next = p->next->next;
+      break;
     }
+    p = p->next;
+    count += 1;
+  }
   return head;
 }
 
 int main() {
 
   struct Node *head;
-
-  head = (struct Node *)malloc(sizeof(struct Node));
   linkedListTraversal(head);
+  head = (struct Node *)malloc(sizeof(struct Node));
+  printf("Length Of Linked List is: %d\n", length(head));
+
   head->data = 03;
   head->next = NULL;
-
-  head = insertAtbeginning(head, 27);
-  head = insertAtEnd(head, 1999);
-
-  head = insertAtIndex(head, 222, 0);
-  head = insertAtIndex(head, 999, 2);
-
-  printf("before deletion\n");
+  printf("Length Of Linked List is: %d\n", length(head));
   linkedListTraversal(head);
 
-  
-  printf("Length Of Linked List is: %d\n", length(head));
-  head = deleteAtIndex(head, 0);
-  head = deleteAtIndex(head, 2);
-  printf("After deletion\n");
-  linkedListTraversal(head);
-  printf("Length Of Linked List is: %d\n", length(head));
+    head = insertAtbeginning(head, 27);
+    head = insertAtEnd(head, 1999);
+
+    head = insertAtIndex(head, 222, 0);
+    head = insertAtIndex(head, 999, 2);
+
+    printf("before deletion\n");
+    linkedListTraversal(head);
+
+    printf("Length Of Linked List is: %d\n", length(head));
+    head = deleteAtIndex(head, 0);
+    head = deleteAtIndex(head, 2);
+    printf("After deletion\n");
+    linkedListTraversal(head);
+    printf("Length Of Linked List is: %d\n", length(head));
   return 0;
 }
