@@ -1,4 +1,8 @@
-
+// Insert Start - O(1)
+// Insert End - O(n)
+// Forward/Reverse Traverse - O(n)
+// Delete at Start O(1)
+// Delete at End-Index O(n)
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -99,11 +103,45 @@ struct Node *insert_at_end(struct Node *head, int data) {
   return head;
 }
 
+struct Node *delete_at_index(struct Node *head, int index) {
+
+  if (length(head) == 0) {
+    printf("Linked List is Empty!!");
+    return head;
+  }
+
+  if (index > length(head) - 1 || index < 0) {
+    printf("Invalid Index\n");
+    return head;
+  }
+
+  if (index == 0) {
+    head = head->next;
+    head->prev = NULL;
+    return head;
+  }
+
+  int count = 0;
+  struct Node *ptr = head;
+  while(ptr != NULL){
+    if(index - 1 == count){
+      ptr->next->prev = ptr;
+      ptr->next = ptr->next->next; 
+      break;
+    }
+
+    ptr = ptr->next;
+    count += 1;
+  }
+
+  return head;
+}
+
 int main() {
 
   struct Node *head;
   printf("Length: %d\n", length(head));
-  
+
   // head = (struct Node *)malloc(sizeof(struct Node));
   head = insert_at_end(head, 888);
   // head->prev = NULL;
@@ -118,8 +156,10 @@ int main() {
   head = insert_at_end(head, 50);
   head = insert_at_end(head, 999);
   
-
   linkedForwardListTraversal(head);
+  head = delete_at_index(head, 0);
+  head = delete_at_index(head, 2);
+  head = delete_at_index(head, 3);
   linkedReverseListTraversal(head);
 
   return 0;
